@@ -1,7 +1,12 @@
+<!-- Banner -->
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Rohith%20Balsa&fontSize=40&fontAlignY=35&desc=Senior%20AI%20Engineer%20|%20LLM%20%26%20Agentic%20Systems&descAlignY=55&descAlign=50" />
+</p>
+
 # 👋 Hi, I'm Rohith Balsa
 
-🚀 **Senior AI Engineer** | Building production‑grade **LLM, agentic, and data platforms** for enterprise impact.  
-💡 Turning AI into measurable outcomes: $500M+ transaction volume, 15x workload amplification, and zero compliance incidents.
+🚀 **Senior AI Engineer** | Designing production‑grade **LLM, agentic, and data platforms** for enterprise impact.  
+💡 Proven outcomes: $500M+ transaction volume, 15x workload amplification, and zero compliance incidents.
 
 ---
 
@@ -41,8 +46,11 @@ ML pipeline for healthcare risk prediction.
 ---
 
 ## 📊 GitHub Stats
-![Stats](https://github-readme-stats.vercel.app/api?username=rohith0707&show_icons=true&theme=radical)  
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=rohith0707&layout=compact&theme=radical)
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=rohith0707&show_icons=true&theme=radical" />
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=rohith0707&theme=radical" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=rohith0707&layout=compact&theme=radical" />
+</p>
 
 ---
 
