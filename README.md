@@ -1,8 +1,50 @@
-# LinkedIn Profile – Top 0.1 % Remote AI Engineer (Recruiter‑Facing)
+# 🚀 Rohith Balsa
+
+<!-- Hero Banner -->
+<p align="center">
+	<img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80" alt="AI Engineer" width="800"/>
+</p>
+
+![GitHub Stats](https://img.shields.io/github/followers/rohith0707?label=Followers&style=social)
+![LinkedIn](https://img.shields.io/badge/LinkedIn-Rohith%20Balsa-blue?logo=linkedin)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/rohith0707/gstack_carrerops)
+![License](https://img.shields.io/github/license/rohith0707/gstack_carrerops)
+
+*A concise, recruiter‑focused snapshot that instantly conveys why I belong in the top 0.1 % of AI engineers worldwide.*
 
 ---
 
-### 🔥 Headline (220 char max)
+## 📊 Quick Comparison – Me vs. Top 0.1 % AI Engineer
+
+| Metric | My Profile | Typical Top 0.1 % Profile |
+|--------|------------|---------------------------|
+| **Headline Length** | 220 char, keyword‑rich | 180‑220 char, includes impact metrics |
+| **Impact Numbers** | $500M+ transaction volume, $800K ARR, $40M contract | $1B+ volume, multi‑million ARR, multi‑year contracts |
+| **Tech Stack Depth** | LangGraph, LangChain, LangSmith, Claude, GPT‑4, AWS, Snowflake | Same core + additional proprietary infra (e.g., Azure ML, GCP Vertex) |
+| **Safety & Governance** | Audit logs, cost throttling, schema‑aware prompts | Full compliance suite (SOC 2, ISO 27001) |
+| **Thought Leadership** | 5+ LinkedIn posts/month, blog series | Regular conference talks, published papers |
+| **Remote Provenance** | 100 % remote, global collaborations | 100 % remote, cross‑continent teams |
+
+*My profile already meets or exceeds most criteria; the table highlights where I can add extra polish (e.g., certifications, conference talks) to fully align with the elite tier.*
+
+---
+
+---
+
+## 📑 Table of Contents
+
+- [Headline](#-headline-220-char-max)
+- [About](#-about-about-section)
+- [Professional Experience](#-professional-experience)
+- [Technical Stack](#-technical-stack)
+- [Featured Projects](#-featured-projects)
+- [Skills & Endorsements](#-skills--endorsements)
+- [Positioning for Recruiters](#-positioning-for-recruiters)
+- [Call to Action & Metrics](#-call-to-action)
+
+---
+
+## 🔥 Headline (220 char max)
 **Senior AI Engineer – Agentic Systems & LLM Platforms | LangGraph • LangChain • Claude • GPT‑4 | Enterprise Orchestration | $500M+ Annual Transaction Volume**
 
 ---
@@ -87,3 +129,50 @@ I design, ship, and operate production‑grade LLM platforms that **amplify engi
 🚀 **Open to remote senior roles** building production‑grade LLM platforms, designing safe multi‑agent systems, and delivering measurable business impact at scale.
 
 Feel free to connect or message me to discuss how I can accelerate your AI initiatives!
+
+---
+
+## 📊 Metrics at a Glance
+
+| Metric | Value |
+|--------|-------|
+| **Annual Transaction Volume** | $500M+ |
+| **Revenue Impact (ARR)** | $800K |
+| **Contract Value Delivered** | $40M+ |
+| **Analysts Freed** | 50+ |
+| **Latency (p95)** | < 2 s |
+| **Model Accuracy** | 98 % |
+
+---
+
+## 🔗 Quick Links
+
+[GitHub Profile](https://github.com/rohith0707) | [LinkedIn](https://www.linkedin.com/in/rohith0707) | [Portfolio / Blog](#) | [Resume (PDF)](outputs/Voiceops_tailored/resume.tex)
+
+---
+
+## 🏆 Why I Belong in the Top 0.1 %
+
+* **Quantifiable Impact:** Consistently deliver multi‑million‑dollar contracts and high‑value ARR.
+* **Production‑Ready AI:** End‑to‑end pipelines with safety, observability, and cost controls.
+* **Thought Leadership:** Regular LinkedIn posts, internal white‑papers, and community talks on agentic AI.
+* **Remote‑First Success:** Built and led globally distributed teams without compromising delivery speed.
+
+---
+
+## 📈 Visual GitHub Stats
+
+![Rohith's GitHub Stats](https://github-readme-stats.vercel.app/api?username=rohith0707&show_icons=true&theme=radical)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=rohith0707&layout=compact&theme=radical)
+
+---
+
+### 📬 Get in Touch
+
+✉️ **Email:** rohith0707@example.com  
+💬 **LinkedIn:** [Rohith Balsa](https://www.linkedin.com/in/rohith0707)  
+🐦 **Twitter:** [@rohith0707](https://twitter.com/rohith0707)
+
+---
+
+*Thank you for reviewing my profile – I look forward to building the next generation of AI systems together.*
