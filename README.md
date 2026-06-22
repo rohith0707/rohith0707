@@ -76,3 +76,6 @@ Proven track record in **LLM platform engineering**, **multi‑age
 - Delivered **$40M+ contract impact** through AI‑driven efficiency gains.  
 - Speaker at AI Governance and Enterprise LLM Summit 2025.
 
+---
+
+⭐ *“I design AI agents that turn enterprise workflows into measurable outcomes.”*
