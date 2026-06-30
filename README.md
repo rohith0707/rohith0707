@@ -97,9 +97,8 @@ Let's discuss how I can accelerate your AI infrastructure initiatives—whether 
 ---
 
 ## 📬 Let's Connect
-✉️ **Email:** rohith0707@example.com  
-💬 **LinkedIn:** [Rohith Balsa](https://www.linkedin.com/in/rohithbalsa)  
-🐦 **Twitter:** [@rohith0707](https://twitter.com/rohith0707)  
+✉️ **Email:** balsarohith7@gmail.com  
+💬 **LinkedIn:** [Rohith Balsa](https://www.linkedin.com/in/rohithbalsa)   
 💻 **GitHub:** [rohith0707](https://github.com/rohith0707)
 
 ---
