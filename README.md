@@ -1,4 +1,4 @@
-# Rohith Balsa | AI Systems & Infrastructure Engineer
+# Rohith Balsa | AI  Engineer
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Rohith%20Balsa-blue?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/rohithbalsa)
 [![GitHub Followers](https://img.shields.io/github/followers/rohith0707?label=Followers&style=flat-square)](https://github.com/rohith0707)
