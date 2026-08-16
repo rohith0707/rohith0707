@@ -1,32 +1,72 @@
 # Rohith Balsa
 
-**AI Engineer · Production LLM & Agentic Systems**
+**Applied AI Engineer · Production LLM, Agentic Systems & AI Evaluation**
 
-I build AI systems that have to survive after the demo: agent workflows, RAG, tool use, evaluation, guardrails, and the backend/infrastructure around them.
+I build AI systems that have to work after the demo — agent workflows, RAG, tool use, evaluation, reliability controls, and the backend infrastructure around them.
+
+My focus is the engineering layer between foundation models and reliable AI products: **how to choose a model, evaluate an agent, handle failure, control cost/latency, and make the system observable.**
 
 [LinkedIn](https://www.linkedin.com/in/rohithbalsa) · [GitHub](https://github.com/rohith0707)
 
 ---
 
-## What I work on
+## What I build
 
-**Agentic AI** — orchestration, tool calling, state, human-in-the-loop workflows  
-**LLM engineering** — RAG, structured outputs, context management, model integration  
-**Evaluation** — regression tests, failure analysis, quality measurement, tracing  
+**Agentic systems** — orchestration, tool calling, state, human-in-the-loop workflows  
+**LLM applications** — RAG, natural-language-to-SQL, structured outputs, context engineering  
+**AI evaluation** — regression suites, failure analysis, quality measurement, model comparison  
+**AI infrastructure** — routing, reliability, observability, latency and cost controls  
 **Production engineering** — Python, FastAPI, Docker, Kubernetes, AWS  
 **Data systems** — SQL, Snowflake, Spark, Kafka, Airflow
 
 ---
 
-## Featured project
+## Featured work
+
+### Agent Eval Router
+
+**Python-first evaluation and routing infrastructure for LLM and agent workloads.**
+
+[![Repository](https://img.shields.io/badge/GitHub-Agent--Eval--Router-181717?logo=github)](https://github.com/rohith0707/agent-eval-router)
+
+The project explores a production question:
+
+> **Given a task and explicit quality, latency, and cost constraints, which model or agent should run it — and can we measure and explain that decision?**
+
+```text
+Task
+  ↓
+Task requirements
+  ↓
+Routing policy
+  ↓
+Candidate models / agents
+  ↓
+Execution
+  ↓
+Evaluation
+  ├── Quality
+  ├── Reliability
+  ├── Latency
+  ├── Cost
+  └── Failure class
+  ↓
+Decision + Trace
+  ↓
+Benchmark / Regression feedback
+```
+
+The goal is **not another chatbot**. It is a measurable control layer for AI systems.
+
+**Stack:** Python · FastAPI · Pydantic · Next.js · PostgreSQL · Docker
+
+---
 
 ### GenQuery AI — Natural Language → SQL
 
 [![Repository](https://img.shields.io/badge/GitHub-GenQuery--AI-181717?logo=github)](https://github.com/rohith0707/GenQuery-AI)
 
-A production-oriented LLM application for querying relational data using natural language.
-
-**The interesting part is the system around the model:**
+An LLM application for querying relational data using natural language, designed around the system surrounding the model rather than a single prompt.
 
 ```text
 Question
@@ -44,10 +84,10 @@ Read-only Execution
 Result
 ```
 
-Engineering areas covered:
+Engineering areas:
 
-- schema-aware retrieval
-- RAG and SQL generation
+- schema-aware retrieval and RAG
+- natural-language-to-SQL
 - multi-model support
 - read-only execution
 - validation and guardrails
@@ -60,62 +100,27 @@ Engineering areas covered:
 
 ---
 
-## Current build: Agent Evaluation & Routing
-
-I'm building a benchmark-driven system for evaluating and routing LLM/agent workloads.
-
-The goal is not another chatbot. The goal is to make model and agent decisions measurable:
-
-```text
-Task
- ↓
-Classify
- ↓
-Route
- ↓
-Execute
- ↓
-Evaluate
- ├── Quality
- ├── Latency
- ├── Cost
- └── Reliability
- ↓
-Retry / Fallback
-```
-
-Planned areas:
-
-- task and model routing
-- agent/tool execution
-- evaluation datasets
-- regression testing
-- failure categorization
-- tracing
-- token and cost measurement
-- fallback strategies
-
-This project is being developed as a public engineering artifact, with the benchmark methodology documented alongside the code.
-
----
-
 ## Engineering principles
 
 ### 01 — Measure before optimizing
 
-An agent that looks good in a demo is not necessarily good in production. I care about task success, failure modes, latency, cost, and regressions.
+An agent that looks good in a demo is not necessarily good in production. I care about task success, failure modes, latency, cost, reliability, and regressions.
 
-### 02 — Prefer deterministic systems where they are enough
+### 02 — Use an agent only when it adds value
 
-Not every workflow needs an autonomous agent. Reliability often comes from knowing where to use an LLM and where not to.
+Not every workflow needs autonomy. Deterministic logic is often the better engineering choice when the problem is well-defined.
 
-### 03 — Treat evaluation as part of the product
+### 03 — Evaluation is part of the product
 
-Evaluation is not a final QA step. It belongs next to the application code and deployment pipeline.
+Datasets, graders, regression cases, and failure analysis belong beside the application and deployment pipeline — not in a spreadsheet after launch.
 
 ### 04 — Design for failure
 
-Tools fail. Retrieval is imperfect. Models produce invalid outputs. Production systems need validation, retries, fallbacks, limits, and observability.
+Models produce invalid outputs. Retrieval misses context. Tools time out. Providers rate-limit. Production systems need validation, budgets, retries, fallbacks, and observability.
+
+### 05 — Optimize for outcomes
+
+The objective is not a better demo or a larger benchmark number. It is a more useful, reliable, and economically viable AI product.
 
 ---
 
@@ -129,7 +134,7 @@ Production LLM applications, natural-language-to-SQL, RAG, evaluation, data plat
 
 ---
 
-## Technical stack
+## Technical focus
 
 **AI:** Python · LangGraph · LangChain · RAG · Tool Calling · Structured Outputs · LLM Evaluation  
 **Backend:** FastAPI · REST APIs · Docker · Kubernetes · CI/CD  
@@ -141,9 +146,9 @@ Production LLM applications, natural-language-to-SQL, RAG, evaluation, data plat
 
 ## What you'll find here
 
-I use this profile to publish **working systems, benchmarks, experiments, and engineering notes** — not a collection of tutorial clones.
+Working systems, evaluation experiments, benchmarks, architecture notes, and engineering trade-offs.
 
-The long-term focus is AI infrastructure and product engineering around:
+I am particularly interested in:
 
 - agent evaluation
 - model routing
@@ -152,6 +157,15 @@ The long-term focus is AI infrastructure and product engineering around:
 - tool-use safety
 - retrieval quality
 - inference cost optimization
+- production AI platforms
+
+---
+
+## Current direction
+
+**Applied AI → Agentic Systems → Evaluation → AI Infrastructure**
+
+The goal is to build AI systems that can be **measured, debugged, improved, and trusted in production.**
 
 ---
 
