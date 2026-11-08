@@ -1,6 +1,6 @@
 # Rohith Balsa
 
-**AI Systems Engineer · Core LLMs, Distributed Multi-Agent Runtimes & Evaluation**  
+**AI Engineer · Core LLMs, Distributed Multi-Agent Runtimes & Evaluation**  
 AI Engineer @ **KPMG India** (Apr 2024 – Present) · Hyderabad, India  
 Author of [`agent-occ-lock`](https://github.com/rohith0707/agent-occ-lock) & [`llm-cost-watch`](https://github.com/rohith0707/llm-cost-watch)  
 
