@@ -1,44 +1,36 @@
 # Rohith Balsa
 
-**AI Engineer · Production LLM Systems, Multi-Agent Runtimes & Evaluation**
+**AI Systems Engineer · Core LLMs, Distributed Multi-Agent Runtimes & Evaluation**  
+AI Engineer @ **KPMG India** (Apr 2024 – Present) · Hyderabad, India  
+Author of [`agent-occ-lock`](https://github.com/rohith0707/agent-occ-lock) & [`llm-cost-watch`](https://github.com/rohith0707/llm-cost-watch)  
 
-I build AI systems that run in production after the demo: distributed agent runtimes, optimistic state synchronization, RAG pipelines, deterministic evaluation gates, and low-latency backend infrastructure.
-
-My focus is the engineering layer between foundation models and dependable AI products: how you resolve concurrent agent race conditions, how we dynamically route queries for cost and latency, how you enforce strict schema boundaries, and how we make our trajectories observable. You shouldn't have to guess why your agent failed or burn your budget on blind model calls. I've spent my career making sure our systems don't fail when traffic spikes.
-
-[LinkedIn](https://www.linkedin.com/in/rohithbalsa) · [GitHub](https://github.com/rohith0707)
+[LinkedIn](https://www.linkedin.com/in/rohithbalsa) · [Email](mailto:balsarohith7@gmail.com) · [Hacker News](https://news.ycombinator.com/submitted?id=rohith0707)
 
 ---
 
-## What I build
+## Architecture & Focus
 
-**Multi-Agent Runtimes** : Concurrency control (OCC), 3-way delta state reconciliation, tool execution, decision ledgers  
-**LLM Control Planes** : Dynamic model routing, schema-aware guardrails, context engineering, policy gates  
-**Continuous Evaluation** : Automated regression suites, trajectory failure analysis, RAGAS metrics, deterministic assertion gates  
-**Enterprise Data Systems** : Text-to-SQL, Snowflake, FAISS vector embeddings, Redis caching, streaming pipelines  
-**Production Engineering** : Python, FastAPI, Docker, Kubernetes, AWS, Azure AI Search, FastMCP
+I build production AI systems designed to operate deterministically under enterprise scale: distributed agent state synchronization, bounded runtime control planes, multimodal RAG platforms, and low-latency evaluation pipelines.
+
+At KPMG, I architect enterprise AI platforms serving **10,000+ monthly queries** with **sub-1.2s p95 latency**, maintaining **94% autonomous tool-calling accuracy** and reducing hallucinations by **40%** through continuous RAGAS evaluation gates.
 
 ---
 
 ## Featured Open-Source Systems
 
-### 1. agent-occ-lock : Distributed Multi-Agent State Synchronization
+### 1. `agent-occ-lock` — Distributed Multi-Agent State Synchronization
+> **Optimistic Concurrency Control (OCC) and 3-way delta reconciliation for parallel agent swarms.**
 
 [![Repository](https://img.shields.io/badge/GitHub-agent--occ--lock-181717?logo=github)](https://github.com/rohith0707/agent-occ-lock)
-[![Tests](https://img.shields.io/badge/tests-5%20passed-brightgreen.svg)]()
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-zero-blue.svg)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Dependencies: Zero](https://img.shields.io/badge/dependencies-zero-brightgreen.svg)]()
 
-I built `agent-occ-lock` after we ran into a nasty race condition in our multi-agent workflows. If you've ever had parallel subagents take 2 to 5 seconds on tool calls, you'll know that naive state updates suffer from silent data loss.
+When parallel subagents (LangGraph, CrewAI, AutoGen) execute concurrently with 500ms–3000ms model latency, standard in-memory dictionary writes suffer from silent lost updates. The slowest agent overwrites previous mutations. Holding distributed Redis mutexes forces serial execution and spikes p95 latency.
 
-In our benchmarks with 25 concurrent workers, standard memory overwrites wiped out 24 out of 25 updates. That's 96% data loss! The slowest agent simply stomped everything that'd finished before it. And we couldn't use pessimistic Redis locks because locking across slow LLM inferences tanks your p95 latency and introduces nasty deadlocks.
-
-So I put together a zero-dependency Python engine that pairs Optimistic Concurrency Control with 3-way delta reconciliation:
-- Compare-And-Swap tokens. Every state read carries an immutable revision tag so you can track who wrote what.
-- 3-way semantic diffs. If an agent tries to commit based on a stale version, our engine compares your base, current, and incoming deltas. If fields don't collide (e.g. your first agent updated sentiment while your second agent updated tags), it auto-merges without re-running your model.
-- Exponential backoff retries. For genuine key collisions, it retries asynchronously with fresh state injection so you don't lose data.
-
-In our 25-worker test, agent-occ-lock gave us 0% data loss with 100% state retention and faster throughput than naive locks.
+`agent-occ-lock` provides pure Python 3.13 atomic Compare-And-Swap (CAS) revision tokens and 3-way semantic diffs:
+- **CAS Revision Tokens**: Every state read yields an immutable revision tag (`version`, `etag`).
+- **3-Way Delta Merge**: Reconciles non-colliding key updates automatically without re-invoking the LLM (0 reruns).
+- **Jittered Backoff**: Retries genuine key collisions asynchronously with fresh state injection.
 
 ```text
                     ┌──────────────────────────────────┐
@@ -63,75 +55,84 @@ In our 25-worker test, agent-occ-lock gave us 0% data loss with 100% state reten
                                               └──────────────────────────────┘
 ```
 
-| Metric | Naive In-Place Overwrites | `agent-occ-lock` (CAS + 3-Way Merge) |
-| :--- | :--- | :--- |
-| **Concurrent Workers** | 25 | 25 |
-| **Retained Mutations** | 1 / 25 | **25 / 25** |
-| **Lost Updates (Silent Loss)** | **24** | **0** |
-| **Data Loss Rate (%)** | **96.0%** | **0.0%** |
-| **Wall Clock Execution** | 0.0350s | **0.0323s** |
-
-**Stack:** Pure Python (Zero Dependencies) · `asyncio` · `hashlib` · `pytest`
+#### Benchmark (25 Concurrent Subagent Workers)
+| Architecture | Retained Updates | Lost Updates (Data Loss) | Data Loss Rate | Wall Clock Time |
+| :--- | :--- | :--- | :--- | :--- |
+| **Naive In-Place Overwrites** | 1 / 25 | **24** | **96.0%** | 0.0350s |
+| **`agent-occ-lock` (CAS + 3-Way Merge)** | **25 / 25** | **0** | **0.0%** | **0.0323s (Sub-35ms)** |
 
 ---
 
-### 2. agent-eval-router : Evidence-Driven Control Plane for Agents
+### 2. `llm-cost-watch` — MCP Server for LLM Cost & Latency Intelligence
+> **Model Context Protocol (MCP 2.x) server that lets Claude debug LLM spend and latency.**
+
+[![Repository](https://img.shields.io/badge/GitHub-llm--cost--watch-181717?logo=github)](https://github.com/rohith0707/llm-cost-watch)
+[![Hacker News](https://img.shields.io/badge/Hacker%20News-Show%20HN-orange)](https://news.ycombinator.com/item?id=50415785)
+[![MCP 2.x](https://img.shields.io/badge/MCP-2.x%20Ready-blue)](https://modelcontextprotocol.io)
+
+Instead of navigating passive web dashboards, `llm-cost-watch` connects directly to Claude Desktop and Claude Code, enabling conversational performance debugging:
+- **`cost_by_feature`**: Ranks subagents and endpoints by dollar spend and token consumption.
+- **`slow_calls`**: Isolates p95 and p99 latency outliers and diagnoses bottlenecks (uncompressed context, recursive tool loops).
+- **`routing_suggestions`**: Scans for short structured prompts running on expensive frontier models (GPT-4o, Sonnet) and calculates exact dollar savings from routing to Claude 3.5 Haiku or GPT-4o-mini (up to 94% cost reduction, -70% latency).
+- **Zero External Egress**: 100% local JSON/SQLite telemetry—no customer data ever leaves your environment.
+
+```python
+# 1-line decorator for automated telemetry
+@watch_llm(feature="customer_intent_classifier", task_type="classification", model="gpt-4o")
+def classify_intent(message: str) -> str:
+    return client.chat.completions.create(...)
+```
+
+---
+
+### 3. `agent-eval-router` — Deterministic Runtime Control Plane
+> **Bounded state machines, decision ledgers, and deterministic evaluation gates for production agents.**
 
 [![Repository](https://img.shields.io/badge/GitHub-agent--eval--router-181717?logo=github)](https://github.com/rohith0707/agent-eval-router)
 
-I built `agent-eval-router` because our engineering team kept hitting a brutal bottleneck: your multi-agent setups get wildly expensive and brittle when you rely on blind prompt chaining.
-
-When your agent takes 4 tool steps, a single bad model call ruins your whole run. And routing every single prompt to GPT-4o simply burns our budget without improving our outcomes. It's unsustainable, and you shouldn't have to guess which model works best for you.
-
-So I built a lightweight control plane in Python around three core primitives that we use daily:
-- Dynamic policy routing. Instead of sending all 10,000 monthly queries to GPT-4o or Claude 3.5 Sonnet, our router inspects your task complexity and routes between frontier models and fast local models. That cut our inference bills by 68% while keeping our quality rock solid.
-- Immutable decision ledger. It records your tool calls, state transitions, and confidence scores into SQLite so you don't lose hours debugging failed trajectories.
-- Automated eval gates. We run continuous RAGAS evaluations on our live traces, catching prompt regressions before your code reaches staging so you can deploy with confidence.
-
-In our production runs, we've maintained 94% autonomous tool execution accuracy over 10,000 monthly requests, with a 40% drop in hallucinations across 100-page enterprise files, and our p95 latency held under 1200ms using FastMCP WebSocket bindings.
-
-**Stack:** Python · FastAPI · FastMCP · SQLite · LangSmith · Docker
+Autonomous agents degrade into non-deterministic loops when tools return malformed outputs or unexpected schema structures. `agent-eval-router` bounds multi-agent execution loops with deterministic gates:
+- **Dynamic Policy Routing**: Routes incoming requests between frontier models and fast local models based on task complexity, cutting token spend by up to 68%.
+- **Cryptographic Decision Ledger**: Append-only SHA-256 ledger recording every tool call, state transition, and confidence score for enterprise compliance.
+- **Continuous Assertion Gates**: Enforces RAGAS evaluation metrics (Recall@K $\ge$ 0.92, Faithfulness $\ge$ 0.90) directly inside the CI/CD pipeline.
 
 ---
 
-### 3. GenQuery AI : Schema-Aware Text-to-SQL Assistant
+### 4. `GenQuery-AI` — Schema-Aware Text-to-SQL Assistant
+> **Self-correcting AST validation engine for natural language analytical queries.**
 
 [![Repository](https://img.shields.io/badge/GitHub-GenQuery--AI-181717?logo=github)](https://github.com/rohith0707/GenQuery-AI)
 
-At PowerSchool, I built a production text-to-SQL system that translates natural language business questions into secure, optimized analytical queries.
-
-Manual querying was a real drag on our team. Our analysts were spending 4 to 6 hours every day writing complex analytical queries across 50+ Snowflake tables, and we couldn't afford to wait on our engineering team for every single report. It's frustrating when your simple metrics take days to compute.
-
-I designed our end-to-end RAG architecture to fix that:
-- Semantic schema parsing. Instead of stuffing full database schemas into your prompt, we didn't waste our tokens; we used FAISS vector embeddings to dynamically retrieve only the relevant tables and foreign key relationships for your specific question.
-- Safe execution boundaries. We enforced strict read-only Snowflake roles and ran AST-level syntax validation to eliminate any chance of accidental table mutations or data exfiltration from our database.
-- Intelligent caching. Frequent analytical queries were cached in Redis, dropping your query latency from seconds down to sub-100ms.
-
-We've cut our analyst time-to-insight by 60% (dropping 6-hour query workflows down to 2.5 hours), hit 98% query accuracy across 500+ production test cases, and reduced our ad-hoc data engineering support requests by 40%.
-
-**Stack:** Python · LangChain · GPT-4 · Snowflake · FAISS · Redis · Streamlit · AWS EC2
+Engineered at PowerSchool to translate natural language into optimized SQL queries across 50+ enterprise Snowflake tables:
+- **Semantic Schema Parsing**: Dynamic FAISS vector retrieval of relevant schema subsets to prevent context window bloat.
+- **AST Syntax & Security Guardrails**: Pre-execution Abstract Syntax Tree (AST) inspection enforcing read-only constraints and eliminating SQL injection risks.
+- **Production Impact**: Reduced analyst time-to-insight by 60% with 98% query accuracy across 500+ production test suites.
 
 ---
 
-## Engineering Principles
+## Technical Stack & Standards
 
-1. **Measure Before Optimizing:** An agent that looks impressive in our demo isn't necessarily reliable in our production. We measure our task completion, our latency p95, our token economics, and our regression surfaces upfront.
-2. **Deterministic Boundaries Over Free-Form Prompts:** When your security and compliance matter, schema-enforced Pydantic contracts and AST validation outperform fuzzy prompt instructions every time.
-3. **Design for Distributed Failure:** Our models timeout, our tools fail, and our concurrent subagents collide. Our production architectures require atomic CAS revision tokens, semantic fallbacks, and immutable audit ledgers so you don't lose your data.
-4. **Economics Matter in AI:** Routing every query to a frontier model simply doesn't scale for our budgets. Our dynamic policy gates and tier-based routing preserve your quality while slashing our bills by 60%+.
+| Domain | Production Tooling |
+| :--- | :--- |
+| **Agentic Frameworks** | LangGraph, Multi-Agent Swarms, FastMCP, Model Context Protocol (MCP 2.x), ReAct, Supervisor-Worker |
+| **Models & Optimization** | Claude 3.5 Sonnet, Claude 3.5 Haiku, GPT-4o, GPT-4o-mini, Gemini 1.5 Flash, Prompt Caching |
+| **Evaluation & Governance** | RAGAS, LangSmith, Golden Evaluation Sets, Bounded State Machines, Decision Ledgers |
+| **Backend & Cloud Scale** | Python 3.11/3.13, FastAPI, Docker, Kubernetes (AKS), PostgreSQL, Snowflake, Azure AI Search, Kafka |
 
 ---
 
 ## Production Experience
 
-**AI Engineer - KPMG India**  
-Enterprise agent pipelines, multimodal RAG, deterministic safety gates, LangGraph orchestration, handling $500M+ in audited corporate workflows. Zero compliance incidents across all our deployments.
+* **AI Engineer — KPMG India** *(Apr 2024 – Present)*  
+  Architect of enterprise multi-agent platforms and multimodal RAG serving 10,000+ monthly queries with sub-1.2s p95 latency. Enforced 94% autonomous tool precision and 40% hallucination reduction via continuous RAGAS evaluation suites. Neutralized 99.9% of adversarial prompt injections.
 
-**AI Engineer & Data Engineer - PowerSchool India**  
-Production text-to-SQL assistants, semantic schema parsing, big data pipelines, Snowflake optimization, and cloud deployment for our enterprise teams.
+* **AI / Data Engineer — PowerSchool India** *(Jul 2023 – Mar 2024)*  
+  Shipped self-correcting AST Text-to-SQL agents unblocking 50+ analysts. Built multi-agent QA engines catching 92% of silent data regressions before ingestion.
 
 ---
 
-## Connect
+## Get in Touch
 
-[LinkedIn](https://www.linkedin.com/in/rohithbalsa) · [Email](mailto:balsarohith7@gmail.com) · [GitHub](https://github.com/rohith0707)
+I collaborate with engineering leads, CTOs, and researchers building deterministic agentic infrastructure.
+- **Email:** [balsarohith7@gmail.com](mailto:balsarohith7@gmail.com)
+- **LinkedIn:** [linkedin.com/in/rohithbalsa](https://www.linkedin.com/in/rohithbalsa)
+- **Hacker News:** [@rohith0707](https://news.ycombinator.com/user?id=rohith0707)
