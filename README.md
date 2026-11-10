@@ -24,6 +24,8 @@ At KPMG, I architect enterprise AI platforms serving **10,000+ monthly queries**
 [![Repository](https://img.shields.io/badge/GitHub-agent--occ--lock-181717?logo=github)](https://github.com/rohith0707/agent-occ-lock)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Dependencies: Zero](https://img.shields.io/badge/dependencies-zero-brightgreen.svg)]()
+[![AgentControl Commercial](https://img.shields.io/badge/Commercial%20License-AgentControl%20($149)-00C853.svg)](https://balsarohith.gumroad.com/l/vnztsy)
+[![LeadHunter Pro](https://img.shields.io/badge/LeadHunter%20Pro-5,000%20Leads%20($97)-FF90E8.svg)](https://balsarohith.gumroad.com/l/LeadHunter)
 
 When parallel subagents (LangGraph, CrewAI, AutoGen) execute concurrently with 500ms–3000ms model latency, standard in-memory dictionary writes suffer from silent lost updates. The slowest agent overwrites previous mutations. Holding distributed Redis mutexes forces serial execution and spikes p95 latency.
 
